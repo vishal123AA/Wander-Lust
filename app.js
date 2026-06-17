@@ -5,6 +5,10 @@ const PORT = 8080;
 const path = require('path');
 const Listing = require('./models/listing');
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
@@ -66,6 +70,20 @@ app.post("/listings",async(req,res) => {
     const newListings = new Listing(req.body.listing);
     await newListings.save();
     res.redirect("/listings");
+});
+
+//edit
+app.get("/listings/:id/edit",async(req, res) => {
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/edit.ejs",{listing});
+});
+
+//update
+app.put("/listings/:id", async(req, res) => {
+    let {id} = req.params;
+    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    res.redirect(`/listings/${id}`);
 });
 
 app.listen(PORT, () => {
