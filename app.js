@@ -32,31 +32,41 @@ app.get('/', (req, res) => {
     res.send("this is the base route");
 });
 
-// app.get('/testListings', async (req, res) => {
-//     let SampleListings = new Listing({
-//         title: "Cozy Cottage",
-//         description: "A charming cottage nestled in the countryside.",
-//         price: 150,
-//         location: "Countryside",
-//         country: "USA"
-//     });
-//     await SampleListings.save();
-//     res.send("Test listing created!");
-// });
+
  
 //index route
 app.get("/listings",async(req,res) => {
     let allListings =  await Listing.find({});
     res.render("listings/index.ejs",{allListings});
-})
+});
+
+app.get("/listings/new",(req,res) => {
+    res.render("listings/new.ejs");
+});
 
 // show route
 app.get("/listings/:id",async(req,res) => {
     let {id} = req.params;
     let listing = await Listing.findById(id);
     res.render("listings/show.ejs", {listing});
-})
+});
 
+//add listing
+app.post("/listings",async(req,res) => {
+    // let {title,description,image,price,location,country} = req.body;
+    // let newListing = new Listing({
+    //     title:title,
+    //     description:description,
+    //     image:image,
+    //     price:price,
+    //     location:location,
+    //     country:country
+    // });
+    // await newListing.save();
+    const newListings = new Listing(req.body.listing);
+    await newListings.save();
+    res.redirect("/listings");
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
