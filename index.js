@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8080;
 
 const path = require('path');
+const Listing = require('./models/listing');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -29,6 +30,18 @@ async function main() {
 
 app.get('/', (req, res) => {
     res.send("this is the base route");
+});
+
+app.get('/testListings', async (req, res) => {
+    let newListing = new Listing({
+        title: "Cozy Cottage",
+        description: "A charming cottage nestled in the countryside.",
+        price: 150,
+        location: "Countryside",
+        country: "USA"
+    });
+    await newListing.save();
+    res.send("Test listing created!");
 });
 
 app.listen(PORT, () => {
