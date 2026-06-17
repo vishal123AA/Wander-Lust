@@ -44,10 +44,20 @@ app.get('/', (req, res) => {
 //     res.send("Test listing created!");
 // });
  
+//index route
 app.get("/listings",async(req,res) => {
     let allListings =  await Listing.find({});
     res.render("listings/index.ejs",{allListings});
 })
+
+// show route
+app.get("/listings/:id",async(req,res) => {
+    let {id} = req.params;
+    let listing = await Listing.findById(id);
+    res.render("listings/show.ejs", {listing});
+})
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
