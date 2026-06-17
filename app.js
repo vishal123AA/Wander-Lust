@@ -32,18 +32,22 @@ app.get('/', (req, res) => {
     res.send("this is the base route");
 });
 
-app.get('/testListings', async (req, res) => {
-    let SampleListings = new Listing({
-        title: "Cozy Cottage",
-        description: "A charming cottage nestled in the countryside.",
-        price: 150,
-        location: "Countryside",
-        country: "USA"
-    });
-    await SampleListings.save();
-    res.send("Test listing created!");
-});
-
+// app.get('/testListings', async (req, res) => {
+//     let SampleListings = new Listing({
+//         title: "Cozy Cottage",
+//         description: "A charming cottage nestled in the countryside.",
+//         price: 150,
+//         location: "Countryside",
+//         country: "USA"
+//     });
+//     await SampleListings.save();
+//     res.send("Test listing created!");
+// });
+ 
+app.get("/listings",async(req,res) => {
+    let allListings =  await Listing.find({});
+    res.render("listings/index.ejs",{allListings});
+})
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
