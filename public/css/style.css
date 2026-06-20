@@ -97,3 +97,15 @@ footer {
 .listing-link{
     text-decoration: none;
 }
+
+/*new listing*/
+.add-btn{
+    border: none !important;
+    background-color: #fe424d !important;
+}
+
+/*Edit listing*/
+.edit-btn{
+    border: none !important;
+    background-color: #fe424d !important;
+}
