@@ -81,7 +81,7 @@ footer {
 }
 
 .card-img-top {
-    border-radius: 2 rem !important;
+    border-radius: 1rem !important;
     width: 100% !important;
     object-fit: cover !important;
 }
@@ -90,8 +90,10 @@ footer {
     padding: 0 !important;
 }
 
-.card-text p {
+.card-text {
     font-weight: 400 !important;
+    width: 100%;
+    padding-left: 1%;
 }
 
 .listing-link{
@@ -108,4 +110,19 @@ footer {
 .edit-btn{
     border: none !important;
     background-color: #fe424d !important;
+}
+
+/*show listings*/
+.show-img{
+    height: 40vh;
+    width: 90% !important;
+}
+
+.show-card:hover{
+    opacity: 1;
+}
+
+.btns{
+    display: flex;
+    align-items: center;
 }
