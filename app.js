@@ -5,6 +5,7 @@ const PORT = 8080;
 const path = require('path');
 const Listing = require('./models/listing');
 const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js")
 
 const methodOverride = require('method-override');
 
@@ -23,6 +24,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 const mongoose = require('mongoose');
+const { measureMemory } = require('vm');
 const Mongo_URL = 'mongodb://localhost:27017/Wander-Lust';
 
 main()
@@ -45,24 +47,24 @@ app.get('/', (req, res) => {
 
  
 //index route
-app.get("/listings",async(req,res) => {
+app.get("/listings", wrapAsync(async(req,res,next) => {
     let allListings =  await Listing.find({});
     res.render("listings/index.ejs",{allListings});
-});
+}));
 
 app.get("/listings/new",(req,res) => {
     res.render("listings/new.ejs");
 });
 
 // show route
-app.get("/listings/:id",async(req,res) => {
+app.get("/listings/:id",wrapAsync(async(req,res) => {
     let {id} = req.params;
     let listing = await Listing.findById(id);
     res.render("listings/show.ejs", {listing});
-});
+}));
 
 //add listing
-app.post("/listings",wrapAsync( async(req,res,next) => {
+app.post("/listings",wrapAsync(async(req,res,next) => {
     // let {title,description,image,price,location,country} = req.body;
     // let newListing = new Listing({
     //     title:title,
@@ -73,6 +75,9 @@ app.post("/listings",wrapAsync( async(req,res,next) => {
     //     country:country
     // });
     // await newListing.save();
+    if(!req.body.Listing){
+        throw new ExpressError(400,"send valid data for listing")
+    }
       const newListings = new Listing(req.body.listing);
       await newListings.save();
       res.redirect("/listings");
@@ -80,28 +85,37 @@ app.post("/listings",wrapAsync( async(req,res,next) => {
 }));
 
 //edit
-app.get("/listings/:id/edit",async(req, res) => {
+app.get("/listings/:id/edit",wrapAsync(async(req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/edit.ejs",{listing});
-});
+}));
 
 //update
-app.put("/listings/:id", async(req, res) => {
+app.put("/listings/:id", wrapAsync(async(req, res) => {
     let {id} = req.params;
+    if(!req.body.Listing){
+        throw new ExpressError(400,"send valid data for listing")
+    }
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
     res.redirect(`/listings/${id}`);
-});
+}));
 
 //delete
-app.delete("/listings/:id", async(req, res) =>{
+app.delete("/listings/:id", wrapAsync(async(req, res) =>{
     let {id} = req.params;
      await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
+}));
+
+app.all("/*splat", (req,res,next) =>{
+    next(new ExpressError(404, "path not created i.e wrong path"));
 });
 
 app.use((err,req,res,next) => {
-    res.send("something went wrong")
+    let {status = 500,message = "Something went wrong"} = err;
+    res.status(status).render("error.ejs",{message});
+    // res.status(status).send(message);
 });
 
 app.listen(PORT, () => {
