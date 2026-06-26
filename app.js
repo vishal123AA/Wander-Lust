@@ -4,6 +4,7 @@ const PORT = 8080;
 
 const path = require('path');
 const Listing = require('./models/listing');
+const wrapAsync = require("./utils/wrapAsync.js");
 
 const methodOverride = require('method-override');
 
@@ -61,7 +62,7 @@ app.get("/listings/:id",async(req,res) => {
 });
 
 //add listing
-app.post("/listings",async(req,res) => {
+app.post("/listings",wrapAsync( async(req,res,next) => {
     // let {title,description,image,price,location,country} = req.body;
     // let newListing = new Listing({
     //     title:title,
@@ -72,10 +73,11 @@ app.post("/listings",async(req,res) => {
     //     country:country
     // });
     // await newListing.save();
-    const newListings = new Listing(req.body.listing);
-    await newListings.save();
-    res.redirect("/listings");
-});
+      const newListings = new Listing(req.body.listing);
+      await newListings.save();
+      res.redirect("/listings");
+
+}));
 
 //edit
 app.get("/listings/:id/edit",async(req, res) => {
@@ -96,6 +98,10 @@ app.delete("/listings/:id", async(req, res) =>{
     let {id} = req.params;
      await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
+});
+
+app.use((err,req,res,next) => {
+    res.send("something went wrong")
 });
 
 app.listen(PORT, () => {
