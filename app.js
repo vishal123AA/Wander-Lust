@@ -7,6 +7,8 @@ const Listing = require('./models/listing');
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const listingSchema = require("./schema.js");
+const Review = require("./models/review.js");
+const reviewSchema = require("./schema.js");
 
 const methodOverride = require('method-override');
 
@@ -25,7 +27,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 const mongoose = require('mongoose');
-const { measureMemory } = require('vm');
+// const { measureMemory } = require('vm');
 const Mongo_URL = 'mongodb://localhost:27017/Wander-Lust';
 
 main()
@@ -47,6 +49,17 @@ app.get('/', (req, res) => {
 
 const validateListing = (req,res,next)=>{
     let {error} =  listingSchema.validate(req.body);
+      if(error){
+        let errMsg = error.details.map((el) =>  el.message).join(",");
+        throw new ExpressError(400,errMsg);
+      }
+      else{
+        next();
+      }
+}
+
+const validateReview = (req,res,next)=>{
+    let {error} =  reviewSchema.validate(req.body);
       if(error){
         let errMsg = error.details.map((el) =>  el.message).join(",");
         throw new ExpressError(400,errMsg);
@@ -110,6 +123,19 @@ app.delete("/listings/:id", wrapAsync(async(req, res) =>{
     let {id} = req.params;
      await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
+}));
+
+//post review add
+app.post("/listings/:id/reviews",validateReview,wrapAsync( async(req,res) => {
+    let {id} = req.params;
+    let listing =  await Listing.findById(id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+
+    res.redirect(`/listings/${id}`);
 }));
 
 app.all("/*splat", (req,res,next) =>{
