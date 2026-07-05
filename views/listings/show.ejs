@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
     <div class="row mt-3 justify-content-center">
         <div class=" col-lg-8 col-md-10 col-sm-12 mb-2">
-            <h3><b>
+            <h3><b style="margin-left: 1rem;">
                     <%= listing.title %>
                 </b></h3>
         </div>
@@ -27,7 +27,7 @@
             </form>
         </div>
 
-        <div class="col-8">
+        <div class="col-lg-8 col-sm-12 col-md-10">
             <hr>
             <h4>Leave a Review</h4>
             <form action="/listings/<%= listing._id %>/reviews" class="mb-3 mt-3 needs-validation" novalidate
@@ -47,9 +47,23 @@
                         Please write an comment for adding reviews
                     </div>
                 </div>
-    
-             <br>
-              <button class="btn btn-outline-dark">Submit</button>
+
+                <br>
+                <button class="btn btn-outline-dark">Submit</button>
             </form>
+
+            <hr>
+            <h3 class="mb-3"> All Reviews </h3>
+            <div class="row">
+                <%for(review of listing.reviews){%>
+                  <div class="review-card col-12 col-md-5 mb-3">  
+                     <div class="card-body">
+                        <h5 class="card-title">John Doe</h5>
+                        <p class="card-text">  <%=review.comment %></p>
+                        <p class="card-text"> <%= review.rating %> Stars</p>                   
+                     </div>
+                   </div> 
+                <%}%>
+            </div>
         </div>
     </div>
