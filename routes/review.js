@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({mergeParams:true});
 
 const Review = require("../models/review.js");
-const reviewSchema = require("../schema.js");
+const {reviewSchema} = require("../schema.js");
 
 const Listing = require('../models/listing');
 
@@ -41,3 +41,5 @@ router.delete("/:reviewId" ,wrapAsync(async(req,res) => {
 
     res.redirect(`/listings/${id}`);
 }));
+
+module.exports = router;
