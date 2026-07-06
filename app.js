@@ -2,15 +2,15 @@ const express = require('express');
 const app = express();
 const PORT = 8080;
 
-const Listing = require('./models/listing');
-const listingSchema = require("./schema.js");
+// const Listing = require('./models/listing');
+// const listingSchema = require("./schema.js");
 const listings = require("./routes/listing.js");
 
-const Review = require("./models/review.js");
-const reviewSchema = require("./schema.js");
+// const Review = require("./models/review.js");
+// const reviewSchema = require("./schema.js");
 const reviews = require("./routes/review.js");
 
-const wrapAsync = require("./utils/wrapAsync.js");
+// const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 const path = require('path');
@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
 app.use("/listings",listings);
 app.use("/listings/:id/reviews",reviews);
 
-app.all("/*splat", (req,res,next) =>{
+app.all("*splat", (req,res,next) =>{
     next(new ExpressError(404, "path not created i.e wrong path"));
 });
 
