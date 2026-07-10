@@ -17,6 +17,8 @@ const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate =  require("ejs-mate");
 
+const sesssion = require("express-session");
+
 app.engine("ejs",ejsMate);
 
 app.set('view engine', 'ejs');
@@ -29,6 +31,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 
+const sessionOptions = {
+    secret:"mysupersecretkey",
+    resave:false,
+    saveUnintialized:true,
+    cookie : {
+        expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge : 7* 24 *60*60*1000,
+        httpOnly : true
+    },
+};
+app.use(sesssion(sessionOptions));
 
 const mongoose = require('mongoose');
 const Mongo_URL = 'mongodb://localhost:27017/Wander-Lust';
