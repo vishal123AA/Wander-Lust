@@ -17,7 +17,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate =  require("ejs-mate");
 
-const sesssion = require("express-session");
+const session = require("express-session");
 const flash = require("connect-flash");
 
 app.engine("ejs",ejsMate);
@@ -62,11 +62,12 @@ app.get('/', (req, res) => {
     res.send("this is the base route");
 });
 
-app.use(sesssion(sessionOptions));
+app.use(session(sessionOptions));
 app.use(flash());
 
 app.use((req,res,next) =>{
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
     next();
 });
 
