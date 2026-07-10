@@ -32,7 +32,12 @@ router.get("/new",(req,res) => {
 router.get("/:id",wrapAsync(async(req,res) => {
     let {id} = req.params;
     let listing = await Listing.findById(id).populate("reviews");
-    res.render("listings/show.ejs", {listing});
+    if(!listing){
+        req.flash("error","Listing you want didn't Exists");
+        res.redirect("/listings");
+    }else{
+      res.render("listings/show.ejs", {listing});
+    }
 }));
 
 //add listing
@@ -58,7 +63,12 @@ router.post("/",validateListing,wrapAsync(async(req,res,next) => {
 router.get("/:id/edit",wrapAsync(async(req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
-    res.render("listings/edit.ejs",{listing});
+    if(!listing){
+        req.flash("error","Listing you want didn't Exists");
+        res.redirect("/listings");
+    }else{
+      res.render("listings/edit.ejs",{listing});
+    }
 }));
 
 //update
