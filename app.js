@@ -18,6 +18,7 @@ const methodOverride = require('method-override');
 const ejsMate =  require("ejs-mate");
 
 const sesssion = require("express-session");
+const flash = require("connect-flash");
 
 app.engine("ejs",ejsMate);
 
@@ -34,25 +35,24 @@ app.use(express.json());
 const sessionOptions = {
     secret:"mysupersecretkey",
     resave:false,
-    saveUnintialized:true,
+    saveUninitialized:true,
     cookie : {
         expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge : 7* 24 *60*60*1000,
         httpOnly : true
     },
 };
-app.use(sesssion(sessionOptions));
 
 const mongoose = require('mongoose');
 const Mongo_URL = 'mongodb://localhost:27017/Wander-Lust';
 main()
-    .then(() => {
-        console.log("MongoDB connected successfully");
-    })
-    .catch((err) => {
-        console.log("MongoDB connection failed");
-        console.log(err);
-    });
+.then(() => {
+    console.log("MongoDB connected successfully");
+})
+.catch((err) => {
+    console.log("MongoDB connection failed");
+    console.log(err);
+});
 
 async function main() {
     await mongoose.connect(Mongo_URL);
@@ -60,6 +60,14 @@ async function main() {
 
 app.get('/', (req, res) => {
     res.send("this is the base route");
+});
+
+app.use(sesssion(sessionOptions));
+app.use(flash());
+
+app.use((req,res,next) =>{
+    res.locals.success = req.flash("success");
+    next();
 });
 
 app.use("/listings",listings);
