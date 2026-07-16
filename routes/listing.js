@@ -41,7 +41,7 @@ router.get("/:id",wrapAsync(async(req,res) => {
 }));
 
 //add listing
-router.post("/",validateListing,wrapAsync(async(req,res,next) => {
+router.post("/",validateListing,wrapAsync(async(req,res) => {
     // let {title,description,image,price,location,country} = req.body;
     // let newListing = new Listing({
     //     title:title,
