@@ -19,4 +19,11 @@ const reviewSchema = Joi.object({
     }).required()
 })
 
-module.exports = { listingSchema, reviewSchema };
+const userSchema = Joi.object({
+    user : Joi.object({
+        username : Joi.string().required(),
+        email:Joi.string().email().required(),
+        password : Joi.string().min(6).required()
+    }).required()
+})
+module.exports = { listingSchema, reviewSchema ,userSchema};
