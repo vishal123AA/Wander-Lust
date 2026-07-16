@@ -6,6 +6,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError.js");
 
 const {userSchema} = require("../schema.js"); 
+const passport = require("passport");
 
 const validateUser = (req,res,next)=>{
     let {error} =  userSchema.validate(req.body);
@@ -42,6 +43,11 @@ router.post("/signUp",validateUser,wrapAsync(async(req,res) =>{
 //login user
 router.get("/login", (req,res) => {
     res.render("users/login.ejs");
+});
+
+router.post("/login",passport.authenticate('local',{failureFlash:true , failureRedirect : "/login"}),async(req,res) =>{
+    req.flash("success", "Welcome to WanderLust");
+    res.redirect("/listings");
 });
 
 module.exports = router;
