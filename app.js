@@ -4,11 +4,11 @@ const PORT = 8080;
 
 // const Listing = require('./models/listing');
 // const listingSchema = require("./schema.js");
-const listings = require("./routes/listing.js");
+const listingRouter = require("./routes/listing.js");
 
 // const Review = require("./models/review.js");
 // const reviewSchema = require("./schema.js");
-const reviews = require("./routes/review.js");
+const reviewRouter = require("./routes/review.js");
 
 // const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
@@ -22,7 +22,9 @@ const flash = require("connect-flash");
 
 const passport = require("passport");
 const localStrategy = require("passport-local");
+
 const User = require("./models/user.js");
+const userRouter = require("./routes/user.js");
 
 app.engine("ejs",ejsMate);
 
@@ -89,8 +91,9 @@ app.get("/demoUser", async(req,res) => {
     let registerdUser =   await User.register(fakeUser,"hello");
     res.send(registerdUser);
 });
-app.use("/listings",listings);
-app.use("/listings/:id/reviews",reviews);
+app.use("/listings",listingRouter);
+app.use("/listings/:id/reviews",reviewRouter);
+app.use("/",userRouter);
 
 app.all("*splat", (req,res,next) =>{
     next(new ExpressError(404, "path not created i.e wrong path"));
