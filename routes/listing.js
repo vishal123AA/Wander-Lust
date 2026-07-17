@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Listing = require('../models/listing');
-const {listingSchema} = require("../schema.js"); 
+const {listingSchema, reviewSchema} = require("../schema.js"); 
 
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
@@ -25,6 +25,11 @@ router.get("/", wrapAsync(async(req,res,next) => {
 }));
 
 router.get("/new",(req,res) => {
+    console.log(req.user);
+    if(!req.isAuthenticated()){
+        req.flash("error","you have to Log in first");
+        return res.redirect("/login");
+    }
     res.render("listings/new.ejs");
 });
 
