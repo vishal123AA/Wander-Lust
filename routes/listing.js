@@ -55,6 +55,7 @@ router.post("/",isLoggedIn,validateListing,wrapAsync(async(req,res) => {
     // });
     // await newListing.save();
       const newListings = new Listing(req.body.listing);
+      newListings.owner =req.user._id;
       await newListings.save();
       req.flash("success","New listing Created!");
       res.redirect("/listings");
