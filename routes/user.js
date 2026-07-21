@@ -7,6 +7,7 @@ const ExpressError = require("../utils/ExpressError.js");
 
 const {userSchema} = require("../schema.js"); 
 const passport = require("passport");
+const { saveRedirectUrl } = require("../middleware.js");
 
 const validateUser = (req,res,next)=>{
     let {error} =  userSchema.validate(req.body);
@@ -50,9 +51,9 @@ router.get("/login", (req,res) => {
     res.render("users/login.ejs");
 });
 
-router.post("/login",passport.authenticate('local',{failureFlash:true , failureRedirect : "/login"}),async(req,res) =>{
+router.post("/login",saveRedirectUrl,passport.authenticate('local',{failureFlash:true , failureRedirect : "/login"}),async(req,res) =>{
     req.flash("success", "Welcome to WanderLust");
-    res.redirect("/listings");
+    res.redirect(res.locals.redirectUrl);
 });
 
 
