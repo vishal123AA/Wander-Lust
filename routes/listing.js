@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { isLoggedIn, isOwner ,validateListing} = require("../middleware.js");
+// for MVC
 const listingController = require("../controllers/listing.js");
 
 const wrapAsync = require("../utils/wrapAsync.js");
