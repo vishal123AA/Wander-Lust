@@ -7,24 +7,21 @@ const listingController = require("../controllers/listing.js");
 
 const wrapAsync = require("../utils/wrapAsync.js");
 
-//index route
-router.get("/", wrapAsync(listingController.index));
+//here we group or combine the index route and add listing
+router.route("/")
+.get(wrapAsync(listingController.index))
+.post(isLoggedIn,validateListing,wrapAsync(listingController.createListing))
 
+//newlisting form
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
-// show route
-router.get("/:id",wrapAsync(listingController.showListing));
-
-//add listing
-router.post("/",isLoggedIn,validateListing,wrapAsync(listingController.createListing));
+//here we group or combine the show, update and delete route
+router.route("/:id")
+.get(wrapAsync(listingController.showListing))
+.put(isLoggedIn,isOwner,validateListing ,wrapAsync(listingController.updateListing))
+.delete(isLoggedIn,isOwner, wrapAsync(listingController.destroyListing))
 
 //edit
 router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
-
-//update
-router.put("/:id",isLoggedIn,isOwner,validateListing ,wrapAsync(listingController.updateListing));
-
-//delete
-router.delete("/:id",isLoggedIn,isOwner, wrapAsync(listingController.destroyListing));
 
 module.exports = router;
