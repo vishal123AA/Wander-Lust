@@ -3,7 +3,7 @@
         <div class="col-8 offset-2">
             <h3>New Listing</h3>
             <br>
-            <form method="POST" action="/listings" class="needs-validation" novalidate>
+            <form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input name="listing[title]" id="title" class="form-control" placeholder="Add a Cachy Title"
@@ -23,10 +23,10 @@
                         Decription is required
                     </div>  
                 </div>
+                
                 <div class="mb-3">
-                    <label for="image" class="form-label">Image Link</label>
-                    <input name="listing[image]" id="image" class="form-control" placeholder="enter image URL/Link"
-                        type="text"/>
+                    <label for="image" class="form-label">Upload Listing Image</label>
+                    <input name="listing[image]" id="image" class="form-control" type="file"/>
                 </div>
                 <div class="row">
                 <div class="mb-3 col-md-4">
