@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/vishal123AA/Wander-Lust#readme",
   "dependencies": {
+    "cloudinary": "^2.10.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
