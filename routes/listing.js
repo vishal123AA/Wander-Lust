@@ -7,10 +7,17 @@ const listingController = require("../controllers/listing.js");
 
 const wrapAsync = require("../utils/wrapAsync.js");
 
+const multer = require("multer");
+const {storage} = require("../cloudConfig.js");
+const upload = multer({storage});
+
 //here we group or combine the index route and add listing
 router.route("/")
 .get(wrapAsync(listingController.index))
-.post(isLoggedIn,validateListing,wrapAsync(listingController.createListing));
+// .post(isLoggedIn,validateListing,wrapAsync(listingController.createListing));
+.post(upload.single("listing[image]"),(req,res)=>{
+    res.send(req.file);
+});
 
 //newlisting form
 router.get("/new",isLoggedIn,listingController.renderNewForm);
