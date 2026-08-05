@@ -10,9 +10,10 @@ const listingSchema = new mongoose.Schema({
         type: String
     },
     image: {
-        type: String,
-        default: "https://images.pexels.com/photos/30767893/pexels-photo-30767893.jpeg",
-        set : (v) => v==='' ?"https://images.pexels.com/photos/30767893/pexels-photo-30767893.jpeg" : v
+        url : String,
+        filename : String
+        // default: "https://images.pexels.com/photos/30767893/pexels-photo-30767893.jpeg",
+        // set : (v) => v==='' ?"https://images.pexels.com/photos/30767893/pexels-photo-30767893.jpeg" : v
     },
     price: {
         type: Number,
