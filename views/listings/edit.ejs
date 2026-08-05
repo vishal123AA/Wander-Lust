@@ -2,25 +2,28 @@
     <div class="row mt-3">
         <div class="col-8 offset-2">
             <h3>Edit Listing</h3>
-            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate>
-                <div class="mb-3">
+            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
+                    <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input name="listing[title]" id="title" class="form-control" value="<%= listing.title  %>"
                         type="text" required />
                     <div class="valid-feedback">Looks good</div>
                     <div class="invalid-feedback">Title is required</div>
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="decription" class="form-label">Description</label>
                         <textarea rows="6" cols="55" name="listing[description]" id="description" class="form-control"
                             required><%= listing.description  %></textarea>
                         <div class="invalid-feedback">Description is required</div>
                     </div>
+                    
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image Link</label>
-                        <input name="listing[image]" id="image" class="form-control" value="<%= listing.image  %>"
-                            type="text" required />
-                        <div class="invalid-feedback">Image should be valid</div>
+                        <label for="image" class="form-label">Upload new Image</label>
+                        <input name="listing[image]" id="image" class="form-control" type="file" />
+                        <!-- <div class="invalid-feedback">Image should be valid</div> -->
                     </div>
+
                     <div class="row">
                         <div class="mb-3 col-md-4">
                             <label for="price" class="form-label">Price</label>
@@ -38,6 +41,7 @@
                             <div class="invalid-feedback">Country name should be valid</div>
                         </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
                         <input name="listing[location]" id="location" class="form-control"
