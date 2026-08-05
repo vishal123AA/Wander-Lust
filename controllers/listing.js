@@ -33,8 +33,13 @@ module.exports.createListing = async(req,res) => {
     //     country:country
     // });
     // await newListing.save();
+
+      let url = req.file.path;
+      let filename = req.file.filename;
+
       const newListings = new Listing(req.body.listing);
       newListings.owner =req.user._id;
+      newListings.image = {url,filename};
       await newListings.save();
       req.flash("success","New listing Created!");
       res.redirect("/listings");
