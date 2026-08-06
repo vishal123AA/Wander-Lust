@@ -137,3 +137,8 @@ footer {
     margin-right: 7%;
     margin-left: 1%;
 }
+
+#map{
+    height: 400px;
+    /* width: 80vh; */
+}
