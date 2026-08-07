@@ -68,9 +68,9 @@ async function main() {
     await mongoose.connect(Mongo_URL);
 }
 
-app.get('/', (req, res) => {
-    res.send("this is the base route");
-});
+// app.get('/', (req, res) => {
+//     res.send("this is the base route");
+// });
 
 app.use(session(sessionOptions));
 app.use(flash());
