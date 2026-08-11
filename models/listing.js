@@ -47,6 +47,11 @@ const listingSchema = new mongoose.Schema({
         type: [Number],
         required: true
       }
+    },
+    category: {
+        type: String,
+        enum: ["Trending", "Rooms", "Iconic Cities", "Mountains", "Castles", "Amazing Pools", "Camping", "Farms", "Arctic Pools", "Domes"],
+        required: true // Optional: add this if you want to force every listing to have a category
     }
 });
 
