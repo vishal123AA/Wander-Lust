@@ -29,6 +29,17 @@ module.exports.showListing = async(req,res) => {
     }
 };
 
+module.exports.filterByCategory = async(req,res) =>{
+    let {categoryName} = req.params;
+    let allListings= await Listing.find({ category: categoryName });
+
+    if(allListings.length == 0){
+        req.flash("error", "No listings found for this category!");
+        return res.redirect("/listings");
+    }
+    res.render("listings/index.ejs", { allListings });
+}
+
 module.exports.createListing = async(req,res) => {
     // let {title,description,image,price,location,country} = req.body;
     // let newListing = new Listing({
