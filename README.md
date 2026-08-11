@@ -6,10 +6,11 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Responsive](https://img.shields.io/badge/Responsive-Mobile%20%26%20Tablet-blue?style=for-the-badge)
 
-**Wander-Lust** is a full-stack MVC web application for travel listings utilizing Express, MongoDB, and EJS[cite: 2]. Inspired by Airbnb, it allows users to explore, create, edit, and review travel destinations. The application features a fully responsive design, secure authentication, interactive maps, and cloud-based image storage.
+**Wander-Lust** is a full-stack MVC web application for travel listings utilizing Express, MongoDB, and EJS. 
+Inspired by Airbnb, it allows users to explore, create, edit, and review travel destinations. The application features a fully responsive design, secure authentication, interactive maps, and cloud-based image storage.
 
 ## 🚀 Live Demo
-*Successfully deployed the application on Render, managing the online database with MongoDB Atlas[cite: 2].*
+*Successfully deployed the application on Render, managing the online database with MongoDB Atlas.*
 > **[https://wander-lust-vpje.onrender.com/listings]**
 
 ---
@@ -17,10 +18,10 @@
 ## ✨ Key Features
 
 - **📱 Fully Responsive UI (NEW):** The application layout completely adapts to Mobile, iPad/Tablet, and Desktop screens for a seamless user experience across all devices.
-- **🔐 Secure Authentication:** Implemented secure user authentication with Passport.js[cite: 2]. Only logged-in users can create listings or leave reviews.
+- **🔐 Secure Authentication:** Implemented secure user authentication with Passport.js. Only logged-in users can create listings or leave reviews.
 - **🛡️ Authorization Control:** Strict ownership controls ensure users can only edit or delete the specific listings and reviews they personally created.
-- **🗺️ Interactive Maps:** Integrated Mapbox for interactive location mapping[cite: 2], utilizing forward geocoding to drop exact visual pins for properties.
-- **☁️ Image Uploads:** Utilized Cloudinary for cloud image storage[cite: 2], seamlessly parsed via Multer.
+- **🗺️ Interactive Maps:** Integrated Mapbox for interactive location mapping, utilizing forward geocoding to drop exact visual pins for properties.
+- **☁️ Image Uploads:** Utilized Cloudinary for cloud image storage, seamlessly parsed via Multer.
 - **✅ Data Validation:** Server-side validation using Joi ensures data integrity before it reaches the database.
 - **💬 Flash Messages & Sessions:** Real-time user feedback and secure session management using `connect-flash` and `express-session`.
 
