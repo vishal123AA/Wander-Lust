@@ -31,8 +31,9 @@
       </div>
 
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search destinations" id="search-input" aria-label="Search"/>
+        <form class="d-flex needs-validation" novalidate role="search" method="GET" action="/listings/search">
+          <input class="form-control me-2" type="search" placeholder="Search destinations" id="search-input" name="q" required aria-label="Search"/>
+          <div class="invalid-feedback">Invalid Search</div>
           <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
         </form>
       </div>
