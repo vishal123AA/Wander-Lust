@@ -19,6 +19,9 @@ router.route("/")
 //newlisting form
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
+//filter routes
+router.get("/category/:categoryName", wrapAsync(listingController.filterByCategory));
+
 //here we group or combine the show, update and delete route
 router.route("/:id")
 .get(wrapAsync(listingController.showListing))
