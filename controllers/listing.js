@@ -38,7 +38,7 @@ module.exports.filterByCategory = async(req,res) =>{
         return res.redirect("/listings");
     }
     res.render("listings/index.ejs", { allListings });
-}
+};
 
 module.exports.createListing = async(req,res) => {
     // let {title,description,image,price,location,country} = req.body;
@@ -112,4 +112,29 @@ module.exports.destroyListing = async(req, res) =>{
     await Listing.findByIdAndDelete(id);
     req.flash("success","Listing Deleted!");
     res.redirect("/listings");
+};
+
+module.exports.searchListings = async (req, res) => {
+    const { q } = req.query;
+
+    if (!q || q.trim() === "") {
+        return res.redirect("/listings");
+    }
+
+    let searchQuery = new RegExp(q, "i");
+
+    const allListings = await Listing.find({
+        $or: [
+            { title: searchQuery },
+            { location: searchQuery },
+            { country: searchQuery }
+        ]
+    });
+
+    if (allListings.length === 0) {
+        req.flash("error", "No listings found matching your search.");
+        return res.redirect("/listings");
+    }
+
+    res.render("listings/index.ejs", { allListings });
 };
