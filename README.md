@@ -65,3 +65,48 @@ WANDER-LUST/
 ├── cloudConfig.js     # Cloudinary configuration
 ├── middleware.js      # Custom middleware (auth, validation, etc.)
 └── schema.js          # Joi validation schemas
+## ⚙️ Local Installation & Setup
+
+To run this project locally, follow these steps:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/vishal123AA/Wander-Lust.git
+cd Wander-Lust
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Setup Environment Variables
+Create a `.env` file in the root directory and add your credentials:
+```env
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_api_secret
+MAPBOX_TOKEN=your_mapbox_public_token
+ATLASDB_URL=your_mongodb_atlas_connection_string
+SECRET=your_session_secret_string
+```
+
+### 4. Initialize Database (Optional)
+If you want to seed the database with initial sample data:
+```bash
+cd init
+node index.js
+cd ..
+```
+
+### 5. Run the Application
+```bash
+node app.js
+# or use nodemon: nodemon app.js
+```
+The app will typically run on `http://localhost:8080` (or whichever port you specified).
+
+---
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/vishal123AA/Wander-Lust/issues).
